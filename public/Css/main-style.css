@@ -190,23 +190,36 @@ main{
     font-size: 14px;
     font-weight: bold;
 }
+<<<<<<< HEAD
 #displayPost .mainContent {
     clear: both; 
     overflow: visible; /* เปลี่ยนจาก overflow: hidden เป็น overflow: visible */
 }
 
 #displayPost .mainContent p {
+=======
+#displayPost .mainContent{
+    clear: both; 
+    overflow: hidden;
+    
+}
+#displayPost .mainContent p{
+>>>>>>> 1d97896b01d70433a8c869ad189ee7f9c81150ab
     padding: 10px;
     margin: 0 10px;
     height: fit-content;
     position: relative;
     display: flex; 
     flex-direction: column;
+<<<<<<< HEAD
     font-size: 20px;
     word-wrap: break-word; /* ตัดคำเมื่อคำยาวเกิน */
     overflow-wrap: break-word; /* ทำให้คำยาวเกินสามารถตัดได้ */
     white-space: normal; /* ใช้ normal สำหรับตัดบรรทัดใหม่ */
     word-break: break-word; /* ตัดคำได้ทันทีที่คำยาวเกิน */
+=======
+    font-size: 20px; 
+>>>>>>> 1d97896b01d70433a8c869ad189ee7f9c81150ab
 }
 
 #displayPost .mainContent p div{
@@ -501,9 +514,12 @@ input[type="text"]:hover{
     transition: all 0.6s ease;
     overflow-y: auto;
     font-size: 18px;
+<<<<<<< HEAD
     white-space: normal;
     word-wrap: break-word;
     overflow-wrap: break-word;
+=======
+>>>>>>> 1d97896b01d70433a8c869ad189ee7f9c81150ab
     
 }
 
