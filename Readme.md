@@ -2,11 +2,11 @@
 
 ในการเปิดServer จะเปิดผ่านnodeJs
 เปิดได้สองวิธี 
--เปิด command prompt แล้วแล้วคำสั่ง cd เพื่อไปยังที่ตั้ง folder a.1 
+-เปิด command prompt แล้วแล้วคำสั่ง cd เพื่อไปยังที่ตั้ง folder UX-UI-WebProject 
 จากนั้น ให้ใช้คำสั่ง npm run start 
 และจะเข้าถึงเว็บ localhost:5000 ได้
 
--เปิดVisual studio code  นำfolder a.1 ไปใส่ และเปิดterminal
+-เปิดVisual studio code  นำ folder UX-UI-WebProject ไปใส่ และเปิดterminal
 ใช้คำสั่ง npm run start 
 และจะเข้าถึงเว็บ localhost:5000 ได้
 
