@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>settings</title>
+    <link rel="stylesheet" href="../Css/setting.css">
+</head>
+<body> 
+
+    <div class="frame">
+
+        <!-- การเเจ้งเตือน -->
+        <div class="notification">
+            <label class="container">
+            <input type="checkbox" checked="checked">
+            <svg class="bell-regular" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">                    
+                <path d="M224 0c-17.7 0-32 14.3-32 32V49.9C119.5 61.4 64 124.2 64 200v33.4c0 45.4-15.5 89.5-43.8 124.9L5.3 377c-5.8 7.2-6.9 17.1-2.9 25.4S14.8 416 24 416H424c9.2 0 17.6-5.3 21.6-13.6s2.9-18.2-2.9-25.4l-14.9-18.6C399.5 322.9 384 278.8 384 233.4V200c0-75.8-55.5-138.6-128-150.1V32c0-17.7-14.3-32-32-32zm0 96h8c57.4 0 104 46.6 104 104v33.4c0 47.9 13.9 94.6 39.7 134.6H72.3C98.1 328 112 281.3 112 233.4V200c0-57.4 46.6-104 104-104h8zm64 352H224 160c0 17 6.7 33.3 18.7 45.3s28.3 18.7 45.3 18.7s33.3-6.7 45.3-18.7s18.7-28.3 18.7-45.3z"></path>
+            </svg>
+            <svg class="bell-solid" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
+                <path d="M224 0c-17.7 0-32 14.3-32 32V51.2C119 66 64 130.6 64 208v18.8c0 47-17.3 92.4-48.5 127.6l-7.4 8.3c-8.4 9.4-10.4 22.9-5.3 34.4S19.4 416 32 416H416c12.6 0 24-7.4 29.2-18.9s3.1-25-5.3-34.4l-7.4-8.3C401.3 319.2 384 273.9 384 226.8V208c0-77.4-55-142-128-156.8V32c0-17.7-14.3-32-32-32zm45.3 493.3c12-12 18.7-28.3 18.7-45.3H224 160c0 17 6.7 33.3 18.7 45.3s28.3 18.7 45.3 18.7s33.3-6.7 45.3-18.7z"></path>
+            </svg>
+            </label>
+        </div>
+        <!-- กากบาท -->
+        <button class="button " onclick="window.location.href='../Html/main.html';">
+            <div class="button-box">
+              <span class="button-elem">
+                <svg viewBox="0 0 46 40" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M46 20.038c0-.7-.3-1.5-.8-2.1l-16-17c-1.1-1-3.2-1.4-4.4-.3-1.2 1.1-1.2 3.3 0 4.4l11.3 11.9H3c-1.7 0-3 1.3-3 3s1.3 3 3 3h33.1l-11.3 11.9c-1 1-1.2 3.3 0 4.4 1.2 1.1 3.3.8 4.4-.3l16-17c.5-.5.8-1.1.8-1.9z"
+                  ></path>
+                </svg>
+              </span>
+              <span class="button-elem">
+                <svg viewBox="0 0 46 40">
+                  <path
+                    d="M46 20.038c0-.7-.3-1.5-.8-2.1l-16-17c-1.1-1-3.2-1.4-4.4-.3-1.2 1.1-1.2 3.3 0 4.4l11.3 11.9H3c-1.7 0-3 1.3-3 3s1.3 3 3 3h33.1l-11.3 11.9c-1 1-1.2 3.3 0 4.4 1.2 1.1 3.3.8 4.4-.3l16-17c.5-.5.8-1.1.8-1.9z"
+                  ></path>
+                </svg>
+              </span>
+            </div>
+        </button>
+  
+        <!-- เเก้ไขรูป -->
+        <div class="profile-card">
+            
+            <div class="profile-image">
+                <input type="file" id="profile-pic" accept="image/*">
+                <img src="../iconlike/profile-user-icon-isolated-on-white-background-eps10-free-vector.jpg" id="profile-img" />
+            </div>
+        </div>
+
+        <!-- ความสนใจ -->
+        <div class="interested">
+            <span>ความสนใจ</span>
+            <div class="box">
+                <!-- ฟุตบอล -->
+                <div class="checkbox-wrapper-12">
+                    <div class="cbx">
+                        <input type="checkbox" id="cbx-1" checked>
+                        <label for="cbx-1"></label>
+                        <svg fill="none" viewBox="0 0 15 14" height="14" width="15">
+                            <path d="M2 8.36364L6.23077 12L13 2"></path>
+                        </svg>
+                        <p>⚽ ฟุตบอล</p>
+                    </div>
+                </div>
+                <!-- บาสเกตบอล -->
+                <div class="checkbox-wrapper-12">
+                    <div class="cbx">
+                        <input type="checkbox" id="cbx-2" checked>
+                        <label for="cbx-2"></label>
+                        <svg fill="none" viewBox="0 0 15 14" height="14" width="15">
+                            <path d="M2 8.36364L6.23077 12L13 2"></path>
+                        </svg>
+                        <p>🏀 บาสเกตบอล</p>
+                    </div>
+                </div>
+                <!-- วอลเลย์บอล -->
+                <div class="checkbox-wrapper-12">
+                    <div class="cbx">
+                        <input type="checkbox" id="cbx-3">
+                        <label for="cbx-3"></label>
+                        <svg fill="none" viewBox="0 0 15 14" height="14" width="15">
+                            <path d="M2 8.36364L6.23077 12L13 2"></path>
+                        </svg>
+                        <p>🏐 วอลเลย์บอล</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ข้อมูลส่วนตัว -->
+        <div class="dash">
+            <div class="header">
+                <input id="checkbox1" type="checkbox" checked>
+                <label for="checkbox1">
+                    <svg class="chevron-right" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
+                        <path d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"></path>
+                    </svg>
+                    <svg class="chevron-down" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+                        <path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"></path>
+                    </svg>
+                    <span>บัญชี</span>
+                </label>
+            </div>
+
+            <div id="userFix">
+                <div class="edit">
+                    <!-- ชื่อผู้ใช้ -->
+                    <div class="label-group">
+                      <label for="name" class="labelshow"> Username:
+                          <span class="username">name</span>
+                      </label>
+                      <button class="edit-button">
+                        <svg class="edit-svgIcon" viewBox="0 0 512 512">
+                          <path d="M410.3 231l11.3-11.3-33.9-33.9-62.1-62.1L291.7 89.8l-11.3 11.3-22.6 22.6L58.6 322.9c-10.4 10.4-18 23.3-22.2 37.4L1 480.7c-2.5 8.4-.2 17.5 6.1 23.7s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L387.7 253.7 410.3 231zM160 399.4l-9.1 22.7c-4 3.1-8.5 5.4-13.3 6.9L59.4 452l23-78.1c1.4-4.9 3.8-9.4 6.9-13.3l22.7-9.1v32c0 8.8 7.2 16 16 16h32zM362.7 18.7L348.3 33.2 325.7 55.8 314.3 67.1l33.9 33.9 62.1 62.1 33.9 33.9 11.3-11.3 22.6-22.6 14.5-14.5c25-25 25-65.5 0-90.5L453.3 18.7c-25-25-65.5-25-90.5 0zm-47.4 168l-144 144c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l144-144c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6z"></path>
+                        </svg>
+                      </button>
+                    </div>
+                  
+                    <!-- อีเมล -->
+                    <div class="label-group">
+                      <label for="email" class="labelshow"> Email:
+                        <span class="useremail">email</span>
+                      </label>
+                      <button class="edit-button">
+                        <svg class="edit-svgIcon" viewBox="0 0 512 512">
+                          <path d="M410.3 231l11.3-11.3-33.9-33.9-62.1-62.1L291.7 89.8l-11.3 11.3-22.6 22.6L58.6 322.9c-10.4 10.4-18 23.3-22.2 37.4L1 480.7c-2.5 8.4-.2 17.5 6.1 23.7s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L387.7 253.7 410.3 231zM160 399.4l-9.1 22.7c-4 3.1-8.5 5.4-13.3 6.9L59.4 452l23-78.1c1.4-4.9 3.8-9.4 6.9-13.3l22.7-9.1v32c0 8.8 7.2 16 16 16h32zM362.7 18.7L348.3 33.2 325.7 55.8 314.3 67.1l33.9 33.9 62.1 62.1 33.9 33.9 11.3-11.3 22.6-22.6 14.5-14.5c25-25 25-65.5 0-90.5L453.3 18.7c-25-25-65.5-25-90.5 0zm-47.4 168l-144 144c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l144-144c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6z"></path>
+                        </svg>
+                      </button>
+                    </div>
+                  
+                    <!-- รหัสผ่าน -->
+                    <div class="label-group">
+                      <label for="password" class="labelshow"> Password:
+                        <span class="userpassword">password</span>
+                      </label>
+                      <button class="edit-button">
+                        <svg class="edit-svgIcon" viewBox="0 0 512 512">
+                          <path d="M410.3 231l11.3-11.3-33.9-33.9-62.1-62.1L291.7 89.8l-11.3 11.3-22.6 22.6L58.6 322.9c-10.4 10.4-18 23.3-22.2 37.4L1 480.7c-2.5 8.4-.2 17.5 6.1 23.7s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L387.7 253.7 410.3 231zM160 399.4l-9.1 22.7c-4 3.1-8.5 5.4-13.3 6.9L59.4 452l23-78.1c1.4-4.9 3.8-9.4 6.9-13.3l22.7-9.1v32c0 8.8 7.2 16 16 16h32zM362.7 18.7L348.3 33.2 325.7 55.8 314.3 67.1l33.9 33.9 62.1 62.1 33.9 33.9 11.3-11.3 22.6-22.6 14.5-14.5c25-25 25-65.5 0-90.5L453.3 18.7c-25-25-65.5-25-90.5 0zm-47.4 168l-144 144c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l144-144c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6z"></path>
+                        </svg>
+                      </button>
+                    </div>
+                </div>                  
+            </div>
+        </div>
+
+        <!-- จัดการโพสต์ -->
+        <!-- <div class="dash">
+            <div class="header">
+                <input id="checkbox2" type="checkbox" checked>
+                <label for="checkbox2">
+                    <svg class="chevron-right" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
+                        <path d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"></path>
+                    </svg>
+                    <svg class="chevron-down" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+                        <path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"></path>
+                    </svg>
+                    <span>จัดการโพสต์</span>
+                    <div class="post-post">
+                        <div class="manage">
+                            <button class="delete-button">
+                                <svg class="delete-svgIcon" viewBox="0 0 448 512">
+                                    <path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </label>
+            </div>
+        </div> -->
+    
+    </div>
+    <script src="../Js/userFix.js"></script>
+    <script src="../Js/animationFade.js"></script>
+</body>
+</html>
