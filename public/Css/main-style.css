@@ -297,6 +297,10 @@ main{
 
 #displayPost .displayComment .mainComment{
     display: grid;
+    word-wrap: break-word; /* ตัดคำเมื่อคำยาวเกิน */
+    overflow-wrap: break-word; /* ทำให้คำยาวเกินสามารถตัดได้ */
+    white-space: normal; /* ใช้ normal สำหรับตัดบรรทัดใหม่ */
+    word-break: break-word; /* ตัดคำได้ทันทีที่คำยาวเกิน */
 }
 
 #displayPost .displayComment .mainComment textarea{
