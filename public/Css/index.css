@@ -1,0 +1,44 @@
+body {
+    background-color: #FDFBD4; /* สีพื้นหลัง */
+    margin: 0;
+    font-family: Arial, sans-serif; /* ตั้งฟอนต์ */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* กึ่งกลางทั้งแนวนอนและแนวตั้ง */
+}
+
+/* กล่องที่ครอบปุ่มทั้งหมด */
+#container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /* ระยะห่างระหว่างปุ่ม */
+}
+
+/* สไตล์ปุ่ม */
+button {
+    background-color: #FF7F7F; /* สีพื้นหลังปุ่ม */
+    border: none; /* ลบขอบปุ่ม */
+    border-radius: 8px; /* มุมโค้งมน */
+    padding: 10px 20px; /* ระยะห่างภายในปุ่ม */
+    font-size: 16px; /* ขนาดตัวอักษร */
+    color: white; /* สีตัวอักษร */
+    cursor: pointer; /* เปลี่ยน cursor เป็นรูปมือ */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* เพิ่มเงา */
+    transition: all 0.3s ease; /* เพิ่มเอฟเฟกต์เมื่อ hover */
+}
+
+/* สไตล์เมื่อเอาเมาส์วางบนปุ่ม */
+button:hover {
+    background-color: #FF4D4D; /* สีเข้มขึ้นเมื่อ hover */
+    transform: scale(1.05); /* ขยายปุ่มเล็กน้อย */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* เพิ่มเงาเมื่อ hover */
+}
+
+/* สไตล์ลิงก์ในปุ่ม */
+button a {
+    text-decoration: none; /* ลบเส้นขีดใต้ */
+    color: inherit; /* ใช้สีเดียวกับปุ่ม */
+    font-weight: bold; /* ทำให้ข้อความตัวหนา */
+}
