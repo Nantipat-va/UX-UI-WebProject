@@ -11,6 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const text = input.innerText.trim();
 
+        const name = localStorage.getItem('username')
+
         if (text === "" && selectedImages.length === 0) return;
 
         const timestamp = Date.now();
@@ -21,9 +23,9 @@ document.addEventListener('DOMContentLoaded', () => {
         newPost.innerHTML = `
             <div class="post">
                 <div class="headerPost">
-                    <img src="../../iconlike/profile-user-icon-isolated-on-white-background-eps10-free-vector.jpg" alt="" class = "postProfile">
+                    <img src="" alt="" class = "postProfile" id="profileImg">
                     <div class="group">
-                        <span class="name">Nantipat Wayubut</span>
+                        <span class="name">${name}</span>
                         <span class="postTimer" data-time="${timestamp}">Just now</span>
                     </div>
                     <div class="fixPost">
@@ -86,4 +88,5 @@ document.addEventListener('DOMContentLoaded', () => {
             timer.textContent = timeText;
         }, 10000);
     }
+    
 });
