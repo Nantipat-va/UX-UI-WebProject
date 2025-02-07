@@ -26,7 +26,7 @@ const db = mysql.createConnection({
 ## ติดตั้งdependencies
 
 --เปิด terminal หรือ command prompt 
--รันคำสั่ง `npm install cors dotenv express express-validator jsonwebtoken multer mysql mysql2 nodemon socket.io`
+-รันคำสั่ง `npm install`
 
 จากนั้นสามารถใช้คำสั่ง 
 npm run start 
