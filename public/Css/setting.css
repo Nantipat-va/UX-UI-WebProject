@@ -45,13 +45,16 @@ body{
   border-radius: 80%;
 }  
 
-.profile-image input[type="file"] {
+.userImg {
   position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
+  width: 150px;
+  height: 150px;
+  z-index: 1000;
+  border-radius: 100px;
   cursor: pointer;
+  right: 0;
 }
+
 #profile-pic{
   z-index: 4;
 }
@@ -313,14 +316,21 @@ span{
   display: flex;
   flex-direction: column;
   gap: 15px;
+  max-width: 100%;
 }
 
 #userFix .label-group {
   display: flex;
   justify-content: space-between; 
-  align-items: center; 
   width: 100%;
+  align-items: center;
+  margin-left: auto;
 }
+#userFix .label-group span{
+  text-decoration: underline;
+  font-weight: lighter;
+}
+
   /* ปุ่มเเก้ไขที่เป็นดินสอ */
 
 .edit label{

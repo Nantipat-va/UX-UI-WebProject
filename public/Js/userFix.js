@@ -12,20 +12,9 @@ document.addEventListener("DOMContentLoaded", () =>{
         }
             
     })
-
-    // ถังขะยะ
-    document.getElementById("checkbox2").addEventListener("change", function() {
-        var deleteButton = document.querySelector(".post-post .manage .delete-button");
-        if (this.checked) {
-            deleteButton.style.opacity = 0; // ซ่อนถังขยะ
-        } else {
-            deleteButton.style.opacity = 1; // แสดงถังขยะ
-        }
-    });
-
 })
 
-
+//function updata info
 document.getElementById("userFix").addEventListener("click", (event) => {
     if (event.target.closest(".edit-button")) {
         event.stopPropagation();
@@ -69,9 +58,48 @@ document.getElementById("userFix").addEventListener("click", (event) => {
         
 
         // Event สำหรับบันทึกการแก้ไข
-        saveButton.addEventListener("click", () => {
+        saveButton.addEventListener("click", async (event) => {
             const newText = textInput.value.trim();
             textSpan.textContent = newText || originalText;
+
+            const username = document.getElementById('name').textContent.trim();
+            const email = document.getElementById('email').textContent.trim();
+            const password = document.getElementById('pass').textContent.trim();
+
+            const idUser = localStorage.getItem('idUser');
+
+            if (!username || !email || !password || !idUser) {
+                alert("Please fill in all fields.");
+                return; // หยุดการทำงานหากมีค่าใดๆ เป็น null หรือ empty
+            }
+
+            try {
+                const response = await fetch('/api/update-user-info', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ idUser, username, email, password }),
+                });
+        
+                const result = await response.json();
+
+                console.log('Response:', result);
+
+                if (response.ok) {
+                    alert(result.msg || "Change successful!");
+
+                    localStorage.setItem('username', result.user.username);
+                    localStorage.setItem('idUser', result.user.idUser);
+                    localStorage.setItem('email', result.user.email);
+                    localStorage.setItem('pass', result.user.password);
+                    location.reload('/');
+                    clear(); // ฟังก์ชันทำความสะอาดฟอร์ม
+                } else {
+                    alert(result.error || "Unexpected error occurred");
+                }
+            } catch (err) {
+            }
             cleanup();
         });
 
@@ -88,4 +116,86 @@ document.getElementById("userFix").addEventListener("click", (event) => {
             labelGroup.removeChild(buttonContainer);  // ลบ buttonContainer
         }
     }
+
 });
+
+const idUser = localStorage.getItem('idUser');
+
+// function updata รูป
+document.getElementById("userImg").addEventListener("change", async function(event) {
+    const file = event.target.files[0];
+
+    if (file && idUser) { // ตรวจสอบว่า userId มีค่า
+        // แสดงตัวอย่างรูปภาพที่เลือก
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById("profileImg").src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+
+        // สร้าง FormData เพื่อส่งข้อมูลไปยังเซิร์ฟเวอร์
+        const formData = new FormData();
+        formData.append("image", file);
+        formData.append("idUser", idUser);  // ส่ง userId ไปพร้อมกับไฟล์
+
+        try {
+            const response = await fetch("/api/upload-image", {
+                method: "POST",
+                body: formData,
+            });
+
+            const result = await response.json();
+            if (response.ok) {
+                alert("Image uploaded successfully!");
+            } else {
+                alert(result.error || "Error uploading image.");
+            }
+        } catch (err) {
+            console.error("Error:", err);
+            alert("An error occurred while uploading the image.");
+        }
+    } else {
+        alert("Please log in and select an image.");
+    }
+});
+
+// function ดึงรูป ชื่อ อีเมล และพาส จากdatabase
+document.addEventListener('DOMContentLoaded', (event) =>{
+    const username = localStorage.getItem('username');
+    const name = document.getElementById('name');
+    
+    const useremail = localStorage.getItem('email');
+    const email = document.getElementById('email');
+
+    const userpass = localStorage.getItem('pass');
+    const pass = document.getElementById('pass');
+    
+
+    if(username){
+        name.innerText = username;
+        email.innerText = useremail;
+        pass.innerText= userpass;
+    } else {
+        window.location.href = "../views/login.html"
+    }
+
+    const profileImg = document.getElementById("profileImg");
+
+    // ดึงรูปจาก API
+    fetch(`/api/get-image/${idUser}`)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Image not found");
+        }
+        return response.blob(); // รับข้อมูลเป็นรูป (Blob)
+    })
+    .then(imageBlob => {
+        // สร้าง URL สำหรับ Blob
+        const imageURL = URL.createObjectURL(imageBlob);
+        profileImg.src = imageURL; // ตั้งค่า src ของรูปใน img tag
+    })
+    .catch(error => {
+        console.error(error);
+        profileImg.alt = "Image not available"; // ถ้าผิดพลาดให้แสดงข้อความ
+    });
+})

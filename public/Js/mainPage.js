@@ -39,7 +39,7 @@ document.getElementById("userImg").addEventListener("change", async function(eve
     }
 });
 
-
+//load ชื่อ รูปภาพ
 document.addEventListener('DOMContentLoaded', (event) =>{
     const username = localStorage.getItem('username');
     const name = document.getElementById('name');
@@ -76,7 +76,4 @@ document.addEventListener('DOMContentLoaded', (event) =>{
         console.error(error);
         profileImg.alt = "Image not available"; // ถ้าผิดพลาดให้แสดงข้อความ
     });
-
-    
-
 })

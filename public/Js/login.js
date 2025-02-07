@@ -28,11 +28,13 @@ document.getElementById("loginForm").addEventListener("submit", async (event) =>
         });
 
         const result = await response.json();
+        
         if (response.ok) {
             localStorage.setItem('username', result.user.username);
             localStorage.setItem('idUser', result.user.idUser);
+            localStorage.setItem('email', result.user.email);
+            localStorage.setItem('pass', result.user.password);
 
-            alert("Login successful!");
             clear();
             window.location.href = "../views/main.html";
         } else {

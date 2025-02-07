@@ -1,13 +1,24 @@
 document.addEventListener('DOMContentLoaded', () => {
     const postContainer = document.getElementById("displayPost");
+    const idUser = localStorage.getItem('idUser');
 
     // ใช้ event delegation สำหรับการคลิกที่ปุ่ม sendComment
-    postContainer.addEventListener('click', (event) => {
+    postContainer.addEventListener('click', async (event) => {
         if (event.target.classList.contains("sendComment")) {
             event.preventDefault(); // ป้องกันการส่งฟอร์ม (ถ้ามี)
 
             // ค้นหา parent ที่ใกล้ที่สุด (div.comment)
             const commentBox = event.target.closest(".comment");
+            const postElement = event.target.closest('li').querySelector('.post');
+
+            // console.log("commentBox:",commentBox);
+            console.log("postElement:",postElement);
+
+            const Id = postElement.dataset.postId;
+            // console.log("postId:",postId)
+            
+            const timestamp = Date.now();
+            const commentTime = formatDateTime(timestamp);
 
             // ดึง input และ ul ที่อยู่ภายในโพสต์เดียวกัน
             const input = commentBox.querySelector(".inputComment");
@@ -16,61 +27,49 @@ document.addEventListener('DOMContentLoaded', () => {
             const text = input.value.trim();
             if (text === "") return;
 
-            // ดึง timestamp ปัจจุบัน (เวลาที่โพสต์)
-            const timestamp = Date.now();
+            const formData = {
+                content: text,
+                commentTime: commentTime,
+                postId: Id,
+                idUser: idUser,
+            };
 
-            // สร้าง li ใหม่
-            const newComment = document.createElement('li');
-            newComment.innerHTML = `
-                <div class="headerComment">
-                    <img src="../../iconlike/profile-user-icon-isolated-on-white-background-eps10-free-vector.jpg" alt="">
-                    <div class="group">
-                        <span class="name">Nantipat Wayubut</span>
-                        <span class="commentTimer" data-time="${timestamp}">Just now</span>
-                    </div>
-                    <div class="fixComment">
-                        <i class="toggleFixComment">. . .</i>
-                        <ul class="menuFixComment">
-                            <li class = "editComment">Edit</li>
-                            <li class = "deleteComment" >Delete</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="mainComment">
-                    ${text}
-                </div>
-            `;
+            try {
+                const response = await fetch('/api/comments', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                });
 
-            // เพิ่มเข้าไปใน ul ของโพสต์ที่กดปุ่ม
-            commentList.appendChild(newComment);
+                
 
-            // ล้างค่าช่อง input
-            input.value = "";
+                if (!response.ok) throw new Error('Failed to add comment');
 
-            // ตรวจสอบว่า .commentTimer มีอยู่จริงก่อนอัปเดตเวลา
-            const timerElement = newComment.querySelector(".commentTimer");
-            if (timerElement) {
-                updateSingleCommentTimer(timerElement);
+                const newComment = await response.json();
+
+                window.location.reload();
+                // ล้างค่าช่อง input
+                input.value = "";
+                
+            } catch (error) {
+                console.error("Error adding comment:", error);
             }
+
         }
     });
 
-    // ฟังก์ชันคำนวณเวลาใหม่ของคอมเมนต์เดียว
-    function updateSingleCommentTimer(timer) {
-        setInterval(() => {
-            const postTime = parseInt(timer.getAttribute("data-time"), 10);
-            const currentTime = Date.now();
-            const elapsedTime = Math.floor((currentTime - postTime) / 1000); // แปลงเป็นวินาที
 
-            let timeText = "Just now";
-            if (elapsedTime >= 60) {
-                const minutes = Math.floor(elapsedTime / 60);
-                timeText = `${minutes} minute${minutes > 1 ? "s" : ""} ago`;
-            } else if (elapsedTime > 0) {
-                timeText = `${elapsedTime} second${elapsedTime > 1 ? "s" : ""} ago`;
-            }
-
-            timer.textContent = timeText;
-        }, 10000); // อัปเดตทุก 10 วินาที
+    function formatDateTime(timestamp) {
+        const date = new Date(timestamp);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        const seconds = String(date.getSeconds()).padStart(2, '0');
+    
+        return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
     }
 });

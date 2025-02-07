@@ -45,10 +45,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
     // แก้ไขPOST
-    postContainer.addEventListener('click', (event) =>{
-        if (event.target.classList.contains('editPost')){
+    postContainer.addEventListener('click', (event) => {
+        if (event.target.classList.contains('editPost')) {
             event.stopPropagation();
-
+    
             // ดึงองค์ประกอบที่ต้องการแก้ไข
             const postElement = event.target.closest('.post');
             const postContent = postElement.querySelector('.mainContent p');
@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", function() {
             // แยกข้อความและรูปภาพออกมา
             const textContent = postContent.childNodes[0]?.nodeValue.trim() || '';
             const imageSpan = postContent.querySelector('span');
-
+    
             // สร้าง textarea สำหรับแก้ไขข้อความ
             const textArea = document.createElement('textarea');
             textArea.value = textContent;
@@ -68,28 +68,46 @@ document.addEventListener("DOMContentLoaded", function() {
             if (imageSpan) {
                 postContent.appendChild(imageSpan); // แสดงรูปภาพเดิม
             }
-
+    
             // สร้างปุ่ม Save และ Cancel
             const saveButton = document.createElement('button');
             saveButton.innerText = 'Save';
             const cancelButton = document.createElement('button');
             cancelButton.innerText = 'Cancel';
-
+    
             const div = document.createElement('div');
             postContent.appendChild(div);
-
+    
             div.appendChild(saveButton);
             div.appendChild(cancelButton);
-
+    
             // Event สำหรับบันทึกการแก้ไข
-            saveButton.addEventListener('click', () => {
+            saveButton.addEventListener('click', async () => {
                 const newText = textArea.value.trim();
-                postContent.innerHTML = `${newText} `;
-                if (imageSpan) {
-                    postContent.appendChild(imageSpan); // คงรูปภาพไว้
+                const postId = postElement.dataset.postId; // ดึง postID
+    
+                // ส่งข้อมูลไปยัง server เพื่ออัปเดต
+                try {
+                    const response = await fetch('/api/update-post', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ postId, content: newText }),
+                    });
+    
+                    if (!response.ok) throw new Error('Failed to update post');
+    
+                    // หลังอัปเดตสำเร็จ ให้แสดงเนื้อหาที่อัปเดตแล้ว
+                    postContent.innerHTML = `${newText} `;
+                    if (imageSpan) {
+                        postContent.appendChild(imageSpan); // คงรูปภาพไว้
+                    }
+                } catch (error) {
+                    console.error("Error updating post:", error);
                 }
             });
-
+    
             // Event สำหรับยกเลิกการแก้ไข
             cancelButton.addEventListener('click', () => {
                 postContent.innerHTML = `${textContent} `;
@@ -97,22 +115,40 @@ document.addEventListener("DOMContentLoaded", function() {
                     postContent.appendChild(imageSpan); // คงรูปภาพไว้
                 }
             });
-            
-        }
-    })
-    // ลบPOST
-    postContainer.addEventListener('click', function(event) {
-        // ตรวจสอบว่าปุ่มที่ถูกคลิกเป็นปุ่ม "Delete"
-        if (event.target.classList.contains('deletePost')) {
-            event.stopPropagation(); // ป้องกันการปิดเมนูถ้าคลิกที่ Delete
-            
-            // ค้นหา <li> แม่ของปุ่ม "Delete"
-            const postLi = event.target.closest(".post").parentElement;
-            if (postLi) {
-                postLi.remove(); // ลบ <li> ที่เป็นโพสต์
-            }
         }
     });
+    
+    // ลบโพสต์
+    postContainer.addEventListener('click', function (event) {
+    if (event.target.classList.contains('deletePost')) {
+        event.stopPropagation();
+        const postLi = event.target.closest(".post").parentElement;
+        const postId = postLi.dataset.postId;
+
+        console.log(postId)
+
+        if (postLi) {
+            console.log("Sending delete request for post ID:", postId);
+            fetch(`/api/delete-post/${postId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log("Post deleted successfully");
+                    postLi.remove();
+                } else {
+                    console.error("Failed to delete post");
+                }
+            })
+            .catch(error => console.error("Error deleting post:", error));
+        }
+    }
+});
+
+
 
 
     // แก้ไขComment
@@ -120,11 +156,10 @@ document.addEventListener("DOMContentLoaded", function() {
         if (event.target.classList.contains('editComment')) {
             event.stopPropagation();
     
-            // ดึงองค์ประกอบที่ต้องการแก้ไข
             const commentElement = event.target.closest('.headerComment');
-            const commentContent = commentElement.nextElementSibling; // เลือก .mainComment ที่อยู่ถัดไป
-    
-            // เก็บข้อความต้นฉบับ
+            const commentContent = commentElement.nextElementSibling;
+            const commentId = commentElement.dataset.commentId; // ดึง commentId จาก dataset
+
             const textContent = commentContent.textContent.trim();
     
             // สร้าง textarea สำหรับแก้ไข
@@ -155,7 +190,23 @@ document.addEventListener("DOMContentLoaded", function() {
             // Event สำหรับบันทึกการแก้ไข
             saveButton.addEventListener('click', () => {
                 const newText = textArea.value.trim();
-                commentContent.innerHTML = newText;
+    
+                fetch(`/api/update-comment/${commentId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ comment: newText }),
+                })
+                .then(response => {
+                    if (response.ok) {
+                        commentContent.innerHTML = newText;
+                        console.log('Comment updated successfully');
+                    } else {
+                        console.error('Failed to update comment');
+                    }
+                })
+                .catch(error => console.error('Error updating comment:', error));
             });
     
             // Event สำหรับยกเลิกการแก้ไข
@@ -164,16 +215,36 @@ document.addEventListener("DOMContentLoaded", function() {
             });
         }
     });
+    
     // ลบComment
-    postContainer.addEventListener('click', function(event){
-        if(event.target.classList.contains('deleteComment')){
+    postContainer.addEventListener('click', function (event) {
+        if (event.target.classList.contains('deleteComment')) {
             event.stopPropagation();
-            
-            const CommentLi = event.target.closest(".headerComment").parentElement;
-            if(CommentLi){
-                CommentLi.remove();
+    
+            // ค้นหา Comment ที่จะลบ
+            const commentLi = event.target.closest(".headerComment").parentElement;
+            const commentId = event.target.closest('.headerComment').dataset.commentId;
+    
+            if (commentLi) {
+                // ส่งคำขอลบไปยังเซิร์ฟเวอร์
+                fetch(`/api/delete-comment/${commentId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                })
+                .then(response => {
+                    if (response.ok) {
+                        commentLi.remove(); // ลบออกจากหน้าเว็บ
+                        console.log("Comment deleted successfully");
+                    } else {
+                        console.error("Failed to delete comment");
+                    }
+                })
+                .catch(error => console.error("Error deleting comment:", error));
             }
         }
-    })
+    });
+    
 
 });

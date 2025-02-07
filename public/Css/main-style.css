@@ -190,6 +190,7 @@ main{
 }
 
 
+
 #displayPost img{
     width: 50px;
     height: 50px;
@@ -252,13 +253,24 @@ main{
     flex-wrap: wrap;
 }
 
-#displayPost .mainContent p span img{
+#displayPost .mainContent p img{
     border: none;
     border-radius: 0;
-    max-width: 130vh;
+    max-width: 50vh;
     width: auto;
     height: auto;
     cursor: pointer;
+}
+
+#displayPost .mainContent p button{
+    width: 90px;
+    height: 40px;
+}
+
+#displayPost .mainComment button{
+    font-size: 10px;
+    width: 70px;
+    height: 30px;
 }
 
 #displayPost .mainContent p img.show{

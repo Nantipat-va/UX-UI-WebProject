@@ -5,7 +5,6 @@ document.getElementById("registerForm").addEventListener("submit", async (event)
     const email = document.getElementById("Remail").value;
     const password = document.getElementById("Rpassword").value;
 
-
     try {
         const response = await fetch('/api/register', {
             method: 'POST',

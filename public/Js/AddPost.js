@@ -1,92 +1,65 @@
 let selectedImages = [];
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     const button = document.getElementById('sendpost');
+    const idUser = localStorage.getItem('idUser');
+    let likes = 0;
+    let comments = 0;
 
-    button.addEventListener('click', (event) => {
+    button.addEventListener('click', async (event) => {
         event.preventDefault();
 
         const input = document.getElementById('postContent');
-        const postlist = document.getElementById('displayPost');
-
+        const postImageInput = document.getElementById('postImage'); // input for images
         const text = input.innerText.trim();
-
-        const name = localStorage.getItem('username')
-
-        if (text === "" && selectedImages.length === 0) return;
-
         const timestamp = Date.now();
+        const postTime = formatDateTime(timestamp);
 
-        const imagesHTML = selectedImages.map(url => `<img src="${url}" alt="Post Image" >`).join('');
+        // If there is no text but the image exists, it should still post
+        if (text === "" && postImageInput.files.length === 0) return;
 
-        const newPost = document.createElement('li');
-        newPost.innerHTML = `
-            <div class="post">
-                <div class="headerPost">
-                    <img src="" alt="" class = "postProfile" id="profileImg">
-                    <div class="group">
-                        <span class="name">${name}</span>
-                        <span class="postTimer" data-time="${timestamp}">Just now</span>
-                    </div>
-                    <div class="fixPost">
-                        <i class="fa-solid fa-wrench toggleFixPost"></i>
-                        <ul class="menuFixpost">
-                            <li class="editPost">Edit</li>
-                            <li class="deletePost">Delete</li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div class="mainContent">
-                    <p>
-                        ${text}
-                        <span>${imagesHTML}</span>
-                    </p>
-                </div>
-                <div class="footer">
-                    <span>Like:0</span>
-                    <span>Comment:0</span>
-                </div>
-            </div>
-            <div class="comment">
-                <h2>Comment</h2>
-                <ul class="displayComment"></ul>
-                <div class="inputCommentBox">
-                    <input type="text" placeholder="comment. . ." class="inputComment">
-                    <button class="sendComment">Send</button>
-                </div>
-            </div>`;
+        const formData = new FormData();
+        formData.append('text', text);
+        formData.append('postTime', postTime);
+        formData.append('likes', likes);
+        formData.append('comments', comments);
+        formData.append('idUser', idUser);
 
-        postlist.appendChild(newPost);
+        // Add the image to FormData if exists
+        if (postImageInput.files.length > 0) {
+            formData.append('image', postImageInput.files[0]);
+        }
 
-        input.innerText = "";
-        selectedImages = [];
-        document.getElementById('postImage').value = "";
+        try {
+            const response = await fetch('/api/addpost', {
+                method: 'POST',
+                body: formData,  // Send FormData instead of JSON
+            });
 
+            if (response.ok) {
 
-        const timerElement = newPost.querySelector(".postTimer");
-            if (timerElement) {
-                updateSingleCommentTimer(timerElement);
+            } else {
+                alert('Error adding post');
             }
+        } catch (error) {
+            console.error("Error:", error);
+        }
+
+        // Reset form
+        input.innerHTML = "";
+        postImageInput.value = "";
+        window.location.reload();  // Reload the page to show the new post
     });
 
-    // ฟังก์ชันคำนวณเวลาใหม่ของpost
-    function updateSingleCommentTimer(timer) {
-        setInterval(() => {
-            const postTime = parseInt(timer.getAttribute("data-time"), 10);
-            const currentTime = Date.now();
-            const elapsedTime = Math.floor((currentTime - postTime) / 1000);
-
-            let timeText = "Just now";
-            if (elapsedTime >= 60) {
-                const minutes = Math.floor(elapsedTime / 60);
-                timeText = `${minutes} minute${minutes > 1 ? "s" : ""}  ago`;
-            } else if (elapsedTime > 0) {
-                timeText = `${elapsedTime} second${elapsedTime > 1 ? "s" : ""} ago`;
-            }
-
-            timer.textContent = timeText;
-        }, 10000);
-    }
+    function formatDateTime(timestamp) {
+        const date = new Date(timestamp);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        const seconds = String(date.getSeconds()).padStart(2, '0');
     
+        return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    }
 });
